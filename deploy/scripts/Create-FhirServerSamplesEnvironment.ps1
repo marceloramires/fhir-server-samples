@@ -53,7 +53,7 @@ param
 
     [parameter(Mandatory = $false)]
     [SecureString]$AdminPassword
-
+)
 
 function SecretValueText
 {
@@ -78,6 +78,8 @@ function SecretValueText
 }
 
 Set-StrictMode -Version Latest
+
+Write-Host "Current environment name is: ${EnvironmentName}"
 
 # Some additional parameter validation
 if (($PersistenceProvider -eq "sql") -and ([string]::IsNullOrEmpty($SqlAdminPassword)))
@@ -220,8 +222,20 @@ if (!$sofResourceGroup) {
     New-AzResourceGroup -Name "${EnvironmentName}-sof" -Location $EnvironmentLocation | Out-Null
 }
 
+Write-Host "Current environment name is currenlty: ${EnvironmentName}"
+
 # Deploy the template
-New-AzResourceGroupDeployment -TemplateUri $sandboxTemplate -environmentName $EnvironmentName -fhirApiLocation $FhirApiLocation -ResourceGroupName $EnvironmentName -fhirServerTemplateUrl $fhirServerTemplateUrl -fhirVersion $FhirVersion -sqlAdminPassword $SqlAdminPassword -aadAuthority $aadAuthority -aadDashboardClientId $confidentialClientId -aadDashboardClientSecret $confidentialClientSecret -aadServiceClientId $serviceClientId -aadServiceClientSecret $serviceClientSecret -smartAppClientId $publicClientId -fhirDashboardJSTemplateUrl $dashboardJSTemplate -fhirImporterTemplateUrl $importerTemplate -fhirDashboardRepositoryUrl $SourceRepository -fhirDashboardRepositoryBranch $SourceRevision -deployDashboardSourceCode $DeploySource -usePaaS $UsePaaS -accessPolicies $accessPolicies -enableExport $EnableExport
+Write-Host "fhirApiLocation ${FhirApiLocation}"
+Write-Host "fhirServerTemplateUrl ${fhirServerTemplateUrl}"
+Write-Host "fhirDashboardJSTemplateUrl ${dashboardJSTemplate}"
+Write-Host "fhirVersion ${FhirVersion}"
+Write-Host "sqlAdminPassword ${SqlAdminPassword}"
+Write-Host "fhirApiLocation ${FhirApiLocation}"
+Write-Host "fhirApiLocation ${FhirApiLocation}"
+Write-Host "fhirApiLocation ${FhirApiLocation}"
+New-AzResourceGroupDeployment -TemplateUri $sandboxTemplate -ResourceGroupName $EnvironmentName -aadDashboardClientId $confidentialClientId -aadDashboardClientSecret $confidentialClientSecret -aadServiceClientId $serviceClientId -aadServiceClientSecret $serviceClientSecret -sqlAdminPassword $sqlAdminPassword
+
+# -aadAuthority $aadAuthority  -smartAppClientId $publicClientId  -fhirImporterTemplateUrl $importerTemplate -fhirDashboardRepositoryUrl $SourceRepository -fhirDashboardRepositoryBranch $SourceRevision -deployDashboardSourceCode $DeploySource -usePaaS $UsePaaS -accessPolicies $accessPolicies -enableExport $EnableExport
 
 Write-Host "Warming up site..."
 Invoke-WebRequest -Uri "${fhirServerUrl}/metadata" | Out-Null

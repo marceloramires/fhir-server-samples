@@ -37,7 +37,7 @@ if (Get-Module -Name FhirServer) {
     Write-Host "FhirServer PS module is loaded"
 } else {
     Write-Host "Fetching FHIR Server repo to get access to FhirServer PS module."
-    $fhirServerVersion = 'master'
+    $fhirServerVersion = 'main'
     if (!(Test-Path -Path ".\fhir-server-$fhirServerVersion")) {
         (New-Object System.Net.WebClient).DownloadFile("https://github.com/Microsoft/fhir-server/archive/$fhirServerVersion.zip", "$PWD\fhir-server-$fhirServerVersion.zip")
         Expand-Archive -Path ".\fhir-server-$fhirServerVersion.zip" -DestinationPath "$PWD"
