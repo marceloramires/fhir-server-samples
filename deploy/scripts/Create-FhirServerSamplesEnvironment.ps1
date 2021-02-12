@@ -159,7 +159,7 @@ if ($PersistenceProvider -eq 'sql')
 }
 
 $githubRawBaseUrl = $SourceRepository.Replace("github.com","raw.githubusercontent.com").TrimEnd('/')
-$sandboxTemplate = "${githubRawBaseUrl}/${SourceRevision}/deploy/templates/azuredeploy-sandbox.json"
+$sandboxTemplate = "https://raw.githubusercontent.com/marceloramires/fhir-server-samples/master/deploy/templates/azuredeploy-sandbox.json"
 $dashboardJSTemplate = "${githubRawBaseUrl}/${SourceRevision}/deploy/templates/azuredeploy-fhirdashboard-js.json"
 $importerTemplate = "${githubRawBaseUrl}/${SourceRevision}/deploy/templates/azuredeploy-importer.json"
 
@@ -235,7 +235,10 @@ Write-Host "fhirApiLocation ${FhirApiLocation}"
 Write-Host "fhirApiLocation ${FhirApiLocation}"
 New-AzResourceGroupDeployment -TemplateUri $sandboxTemplate -ResourceGroupName $EnvironmentName -aadDashboardClientId $confidentialClientId -aadDashboardClientSecret $confidentialClientSecret -aadServiceClientId $serviceClientId -aadServiceClientSecret $serviceClientSecret -sqlAdminPassword $sqlAdminPassword
 
+# 
 # -aadAuthority $aadAuthority  -smartAppClientId $publicClientId  -fhirImporterTemplateUrl $importerTemplate -fhirDashboardRepositoryUrl $SourceRepository -fhirDashboardRepositoryBranch $SourceRevision -deployDashboardSourceCode $DeploySource -usePaaS $UsePaaS -accessPolicies $accessPolicies -enableExport $EnableExport
+#   -aadServiceClientSecret s
+# 
 
 Write-Host "Warming up site..."
 Invoke-WebRequest -Uri "${fhirServerUrl}/metadata" | Out-Null

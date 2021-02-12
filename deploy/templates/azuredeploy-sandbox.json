@@ -180,7 +180,7 @@
         "cosmosThroughPut": 1000,
         "isMAG": "[or(contains(resourceGroup().location,'usgov'),contains(resourceGroup().location,'usdod'))]",
         "appServicePlanName": "[concat(variables('environmentName'),'-asp')]",
-        "environmentName": "[if(empty(parameters('environmentName')), concat('fhirdemo', uniqueString(resourceGroup().id)), parameters('environmentName'))]",
+        "environmentName": "[if(empty(parameters('environmentName')), concat('hcaas', uniqueString(resourceGroup().id)), parameters('environmentName'))]",
         "fhirServiceName": "[if(parameters('usePaaS'), variables('environmentName'), concat(variables('environmentName'),'srvr'))]",
         "fhirImporterName": "[concat(variables('environmentName'),'imp')]",
         "webAppsuffix": "[if(variables('isMAG'),'.azurewebsites.us','.azurewebsites.net')]",
